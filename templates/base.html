@@ -1,15 +1,32 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
     <title>{%block title%}Начальная страница{%endblock%}</title>
 </head>
 <body>
+    <div class="navbar">
+        <ul class="menu">
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'start_page' %}">Кабинет</a></li>
+            <li><a href="{% url 'logout' %}">Выход</a></li>            
+            {% else %}
+            {% if 'login' not in request.build_absolute_uri %}
+                <li><a href="{% url 'login' %}">Войти</a></li>
+            {% else %}
+                <li><a href="{% url 'registration' %}">Зарегистрироваться</a></li>
+            {% endif %}
+        {% endif %}
+        </ul>
+    </div
     {%block content%}
     <h1>Начальная страница</h1>
     <p>Это Начальная страница сайта. Здесь можно выбрать функционал:</p>
     <ul>
+        <li><a href="{%url 'passwordchange' %}">Поменять пароль</a>.</li>
         <li><a href="{% url 'upload_video' %}">Загрузить видео</a>.</li>
     </ul>
     {%endblock%}
