@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Video
-from .forms import VideoUploadForm
+from .forms import VideoUploadForm, UserRegistrationForm
 
 
 @login_required
@@ -29,8 +29,18 @@ def upload_video(request):
     return render(request, template_name, context)
 
 
-@login_required
 def register(request):
+    if request.method == 'GET':
+        form = UserRegistrationForm()
+    elif request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return redirect('login')
     template_name = 'registration/registration.html'
-    context = {}
+    context = {
+        'form': form
+    }
     return render(request, template_name, context)
