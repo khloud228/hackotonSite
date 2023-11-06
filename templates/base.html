@@ -29,6 +29,12 @@
         <li><a href="{%url 'passwordchange' %}">Поменять пароль</a>.</li>
         <li><a href="{% url 'upload_video' %}">Загрузить видео</a>.</li>
     </ul>
+    <p>Загруженные видео:</p>
+    {%for video in videos%}
+    <ul>
+        <li>{{video}}.  {%if not video.processed_video%}<a href="#">Обработать</a>{%else%}<a href="{{video.processed_video.get_absolute_url}}">Смотреть результат</a>{%endif%}.</li>
+    </ul>
+    {%endfor%}
     {%endblock%}
 </body>
 </html>

@@ -13,13 +13,15 @@ from django.contrib.auth.views import (
 from .views import (
     start,
     upload_video,
-    register
+    register,
+    result
 )
 
 
 urlpatterns = [
     path('', start, name='start_page'),
     path('upload/', upload_video, name='upload_video'),
+    path('result/<int:processed_video_id>/', result, name='result'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('registration/', register, name='registration'),
