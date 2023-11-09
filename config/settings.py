@@ -133,9 +133,18 @@ LOGIN_REDIRECT_URL = 'start_page'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'source.supersite.authentication.EmailAuthBackend'
 ]
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+EMAIL_HOST_USER = 'khloud228@yandex.ru'
+EMAIL_HOST_PASSWORD = 'rbblcsmgchmzhzix'
+DEFAULT_FROM_EMAIL = 'khloud228@yandex.ru'

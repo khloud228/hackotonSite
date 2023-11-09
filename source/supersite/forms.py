@@ -1,13 +1,22 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Video
+from .models import Video, Camera
 
 
 class VideoUploadForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = ('video',)
+
+
+class CameraAddForm(forms.ModelForm):
+    class Meta:
+        model = Camera
+        fields = ('camera_url', 'username', 'password')
+        widgets = {
+            'password': forms.PasswordInput()
+        }
 
 
 class UserRegistrationForm(forms.ModelForm):

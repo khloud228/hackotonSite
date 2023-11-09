@@ -82,3 +82,27 @@ class ProcessedVideo(models.Model):
     class Meta:
         verbose_name = 'Обработанное видео'
         verbose_name_plural = 'Обработанное видео'
+
+
+class Camera(models.Model):
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='cameras',
+        verbose_name='Автор'
+    )
+    camera_url = models.CharField(
+        max_length=255,
+        verbose_name='rtsp ссылка'
+    )
+    username = models.CharField(
+        max_length=55,
+        verbose_name='Имя пользователя'
+    )
+    password = models.CharField(
+        max_length=55,
+        verbose_name='Пароль'
+    )
+
+    def __str__(self):
+        return f'{self.id}'

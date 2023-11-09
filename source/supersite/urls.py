@@ -14,14 +14,19 @@ from .views import (
     start,
     upload_video,
     register,
-    result
+    result,
+    stream,
+    add_camera
 )
 
 
 urlpatterns = [
     path('', start, name='start_page'),
+    # path('stream/<str:username>/<str:password>/<str:url>', stream, name='stream'),
     path('upload/', upload_video, name='upload_video'),
-    path('result/<int:processed_video_id>/', result, name='result'),
+    path('add/', add_camera, name='add_camera'),
+    path('stream/<int:camera_id>/', stream, name='stream'),
+    path('result/<int:camera_id>/', result, name='result'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('registration/', register, name='registration'),

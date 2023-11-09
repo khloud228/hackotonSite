@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
     <title>{%block title%}Личный кабинет{%endblock%}</title>
+    <style>
+        #video {
+            width: 640px;
+            height: 480px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
     <div class="navbar">
         <ul class="menu">
         {% if request.user.is_superuser %}
-        <li><a href="{% url 'admin:index' %}">Админка</a></li>
+            <li><a href="{% url 'admin:index' %}">Админка</a></li>
         {%endif%}
         {% if request.user.is_authenticated %}
             <li><a href="{% url 'start_page' %}">Кабинет</a></li>
@@ -21,20 +28,36 @@
             <li><a href="{% url 'registration' %}">Зарегистрироваться</a></li>
         {% endif %}
         </ul>
-    </div
+    </div>
     {%block content%}
     <h1>Личный кабинет</h1>
     <p>Это начальная страница сайта. Здесь можно выбрать функционал:</p>
     <ul>
         <li><a href="{%url 'passwordchange' %}">Поменять пароль</a>.</li>
         <li><a href="{% url 'upload_video' %}">Загрузить видео</a>.</li>
+        <li><a href="{% url 'add_camera' %}">Добавить камеру</a>.</li>
     </ul>
-    <p>Загруженные видео:</p>
-    {%for video in videos%}
-    <ul>
-        <li>{{video}}.  {%if not video.processed_video%}<a href="#">Обработать</a>{%else%}<a href="{{video.processed_video.get_absolute_url}}">Смотреть результат</a>{%endif%}.</li>
-    </ul>
-    {%endfor%}
+    {%if videos%}
+        <p>Загруженные видео:</p>
+        <ul>
+        {%for video in videos%}
+            <li>{{video}}.    {%if not video.processed_video%}<a href="#">Обработать</a>{%else%}<a href="{{video.processed_video.video.url}}" download="">Скачать результат</a>{%endif%}.</li>
+        {%endfor%}
+        </ul>
+    {%else%}
+        <p>Не загружено ни одного видео.</p>
+    {%endif%}
+    {%if cameras%}
+        <p>Подключённые камеры</p>
+        <ul>
+        {%for camera in cameras%}
+            <li>{{camera}}.    <a href="{%url 'result' camera.id%}">Смотреть</a>.</li>
+        {%endfor%}
+        </ul>
+    {%else%}
+        <p>Нет подключённых камер.</p>
+    {%endif%}
     {%endblock%}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
