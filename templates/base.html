@@ -4,30 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
     <title>{%block title%}Личный кабинет{%endblock%}</title>
+    <link href="{% static 'image/facicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fontello.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <style>
         #video {
             width: 640px;
             height: 480px;
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-    <div class="navbar">
-        <ul class="menu">
-        {% if request.user.is_superuser %}
-            <li><a href="{% url 'admin:index' %}">Админка</a></li>
-        {%endif%}
-        {% if request.user.is_authenticated %}
-            <li><a href="{% url 'start_page' %}">Кабинет</a></li>
-            <li><a href="{% url 'logout' %}">Выход</a></li>            
-        {% else %}
-            <li><a href="{% url 'login' %}">Войти</a></li>
-            <li><a href="{% url 'registration' %}">Зарегистрироваться</a></li>
-        {% endif %}
-        </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ul class="">
+                {% if request.user.is_superuser %}
+                    <li><a href="{% url 'admin:index' %}">Админка</a></li>
+                {%endif%}
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'start_page' %}">Кабинет</a></li>
+                    <li><a href="{% url 'logout' %}">Выход</a></li>            
+                {% else %}
+                    <li><a href="{% url 'login' %}">Войти</a></li>
+                    <li><a href="{% url 'registration' %}">Зарегистрироваться</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
     </div>
     {%block content%}
     <h1>Личный кабинет</h1>
@@ -58,6 +64,6 @@
         <p>Нет подключённых камер.</p>
     {%endif%}
     {%endblock%}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
